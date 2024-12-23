@@ -31,12 +31,12 @@ RUN . ~/.nvm/nvm.sh && source ~/.bashrc && nvm install node
 # RUN yum install docker-ce docker-ce-cli containerd.io
 # RUN systemctl start docker && systemctl enable docker
 # Verify installations
-RUN java -version && \
-    node -v && \
-    npm -v && \
-    python3 --version && \
-    aws --version && \
-    docker --version
+# RUN java -version && \
+#     node -v && \
+#     npm -v && \
+#     python3 --version && \
+#     aws --version && \
+#     docker --version
 
 # Add buildspec.yml or other optional files if needed (example)
 # ADD buildspec.yml /codebuild/buildspec.yml
