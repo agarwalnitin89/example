@@ -26,7 +26,7 @@ RUN . ~/.nvm/nvm.sh && source ~/.bashrc && nvm install node
 # RUN yum update -y && \
 #     yum install -y docker && \
 #     yum clean all
-
+RUN yum install -y yum-utils device-mapper-persistent-data lvm2
 RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 RUN yum install docker-ce docker-ce-cli containerd.io
 RUN systemctl start docker && systemctl enable docker
