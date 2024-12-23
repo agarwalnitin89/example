@@ -1,5 +1,5 @@
 # Start with the AWS Lambda Python runtime as the base image
-FROM public.ecr.aws/lambda/python:3.9
+FROM amazonlinux:2
 
 # Update the package manager and install necessary tools
 RUN yum update -y && \
