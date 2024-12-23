@@ -13,7 +13,7 @@ RUN yum update -y && \
     && yum clean all
 
 # Install Node.js (LTS version)
-RUN curl -fsSL https://rpm.nodesource.com/setup_18.x | bash - && \
+RUN curl -fsSL https://rpm.nodesource.com/setup_20.x | bash - && \
     yum install -y nodejs && \
     yum clean all
 
