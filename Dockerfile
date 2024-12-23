@@ -20,7 +20,13 @@ RUN touch ~/.bashrc && chmod +x ~/.bashrc
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 RUN . ~/.nvm/nvm.sh && source ~/.bashrc && nvm install node
 # Install Docker CLI (for building Docker images inside the environment)
-RUN curl -fsSL https://get.docker.com/ | sh
+# RUN curl -fsSL https://get.docker.com/ | sh
+
+# Install Docker CLI manually
+RUN yum update -y && \
+    yum install -y docker && \
+    yum clean all
+
 
 # Verify installations
 RUN java -version && \
