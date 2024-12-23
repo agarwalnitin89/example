@@ -22,12 +22,14 @@ RUN . ~/.nvm/nvm.sh && source ~/.bashrc && nvm install node
 # Install Docker CLI (for building Docker images inside the environment)
 # RUN curl -fsSL https://get.docker.com/ | sh
 
-# Install Docker CLI manually
-RUN yum update -y && \
-    yum install -y docker && \
-    yum clean all
+# # Install Docker CLI manually
+# RUN yum update -y && \
+#     yum install -y docker && \
+#     yum clean all
 
-
+RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+RUN yum install docker-ce docker-ce-cli containerd.io
+RUN systemctl start docker && systemctl enable docker
 # Verify installations
 RUN java -version && \
     node -v && \
