@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     git \
     openjdk-11-jdk \
     maven \
+    python3 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
