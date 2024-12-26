@@ -1,48 +1,31 @@
-# Start with the AWS Lambda Python runtime as the base image
-FROM amazonlinux:2
-
-# Update the package manager and install necessary tools
-RUN yum update -y && \
-    yum install -y \
-    aws-cli \
-    docker \
-    tar \
-    gzip \
-    zip \
-    java-17-amazon-corretto \
-    && yum clean all
-
-# Install Node.js (LTS version)
-# RUN curl -fsSL https://rpm.nodesource.com/setup_20.x | bash - && \
-#     yum install -y nodejs && \
-#     yum clean all
-RUN touch ~/.bashrc && chmod +x ~/.bashrc
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-RUN . ~/.nvm/nvm.sh && source ~/.bashrc && nvm install node
-# Install Docker CLI (for building Docker images inside the environment)
-# RUN curl -fsSL https://get.docker.com/ | sh
-
-# # Install Docker CLI manually
-# RUN yum update -y && \
-#     yum install -y docker && \
-#     yum clean all
-# RUN yum install -y yum-utils device-mapper-persistent-data lvm2
-# RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-# RUN yum install docker-ce docker-ce-cli containerd.io
-# RUN systemctl start docker && systemctl enable docker
-# Verify installations
-# RUN java -version && \
-#     node -v && \
-#     npm -v && \
-#     python3 --version && \
-#     aws --version && \
-#     docker --version
-
-# Add buildspec.yml or other optional files if needed (example)
-# ADD buildspec.yml /codebuild/buildspec.yml
+# Use an official Node.js image as the base
+FROM node:20-bullseye
 
 # Set environment variables
-ENV PATH=/var/lang/bin:$PATH
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Set a default command for Lambda (replace `app.lambda_handler` with your handler function)
-CMD ["app.lambda_handler"]
+# Install essential tools and Maven
+RUN apt-get update && apt-get install -y \
+    curl \
+    wget \
+    unzip \
+    git \
+    openjdk-11-jdk \
+    maven \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Twistcli (replace with the appropriate URL for your environment)
+RUN curl -L -o /usr/local/bin/twistcli "https://downloads.twistlock.com/cli/latest/twistcli" \
+    && chmod +x /usr/local/bin/twistcli
+
+# Verify installations
+RUN node -v && npm -v && mvn -v && java -version && twistcli -v
+
+# Set working directory (optional)
+WORKDIR /app
+
+# Add additional tools or configurations here if needed
+
+# Default command (can be overridden)
+CMD ["node"]
